@@ -1,0 +1,25 @@
+Coding Scheme,,
+Code ,Explanation,Coding rule 
+Member State,Name of EU member state (or outside case),string
+Date of Constitution,Date of constitutional release (when the constitution was set into order),numeric/Date
+Last Reform Date,Date of the last change and reform within the constitution,numeric/Date
+E-Voting (yes/no),Is E-Voting present in the constitution?,1 - presence
+,,0 - absence
+Form of e-voting,How is e-voting to be conducted?,1 - per internet (including apps on smartphone/tablet or browser-based)
+,,2 - per voting machine in voting centres
+,,0 - absence of specification
+Electoral law,Are there electoral laws in effect regulating voting procedures,1 - presence
+,,0 - absence
+URL to electoral law,,
+EU accession date,When did the state get a member of the EU?,numeric/Date
+Schengen member,Is the state a Schengen member?,binary
+Eurozone member,Is the state member of the Eurozone?,binary
+,,
+,,
+Vorgehensweise ,"Zunächst Landesverfassung des Mitgliedstaates besorgen (am besten in Englisch, Französisch oder deutsch)",
+,dann diese im Ordner ablegen,
+,"dann Wahlgesetz besorgen (falls zutreffend), entsprechend hier im Dokument vermerken",
+,,
+,,
+keywords constititions,"device, digital, elect (comprising: election & electronic), internet, machine, online, vot (comprising vote & voting)",
+keywords electoral laws,"device, digital, electronic, internet, machine, online",
