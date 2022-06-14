@@ -1,4 +1,5 @@
-# e-voting_constitutions
+# Additional material to the manuscript "Constitutional Structures for E-Voting throughout Europe"
+
 This repository contains the scripts and raw data collected for the paper "Constitutional Structures for E-Voting throughout Europe"
 
 The manuscript is under review for a special issue at Frontiers in Political Science and thus, the script to run the analysis on Eurobarometers will be provided here, too. 
