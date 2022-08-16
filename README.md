@@ -11,4 +11,24 @@ Techno-optimists agree that e-voting lies at the heart of implementing e-governm
 
 We approach the question of “legalistic opportunity structures” by relying on constitutions of European member states and parties´ policies. Using a dictionary approach, our research design analyses the constitutions and manifestos of parties running for the European elections. Therefore, national constitutions and party manifestos are part of this study, which we analyse using several mixed-methods approaches. Our results have the broader implications that we need to study in more detail what the digital transformation and the constitutionalisation of electronic decision-making entail to develop a digital democracy and link it to a public sphere throughout Europe. In the end, we conclude by analysing whether or not the EU pushes its member states to e-voting and will implement e-voting for European elections.
 
-The `.Rmd`-File is in a premature stadium, so please, add remarks and recommendations to improve the code (`code review`) here to the discussion. Thank you. 
+The [`.Rmd`-File](https://github.com/isaborucki/e-voting_constitutions/blob/main/eurobarometerEvoting.Rmd) is in a premature stadium, so please, add remarks and recommendations to improve the code (`code review`) here to the discussion. Thank you. The first plot of the distribution of e-voting through party platforms was produced using this `R-script`
+
+## Short R-Script to reproduce the plot 1
+
+`library(tidyverse)
+library(plotly)
+library(readr)
+results <- read_csv("https://github.com/isaborucki/e-voting_constitutions/blob/main/data/Manifesto_Coding-Search_Results.csv")
+View(results)
+
+evoteyear <- table(results$Land,results$Jahr)
+
+plot(results)
+
+ggplot(results,
+       aes(x=Jahr, y=Land))+
+  geom_point(position = "jitter", alpha = 0.9) +
+  labs(x = "Year",
+       y = "Country") +
+  theme_minimal()
+`
