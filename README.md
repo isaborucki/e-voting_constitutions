@@ -20,7 +20,7 @@ library(tidyverse)
 library(plotly)
 library(readr)
 
-results <- read_csv("https://github.com/isaborucki/e-voting_constitutions/blob/main/data/Manifesto_Coding-Search_Results.csv")
+results <- read_csv("https://raw.githubusercontent.com/isaborucki/e-voting_constitutions/main/data/Manifesto_Coding-Search_Results.csv")
 View(results)
 
 evoteyear <- table(results$Land,results$Jahr)
