@@ -52,4 +52,4 @@ ggplot(results,
   labs(x = "Year",
        y = "Country") +
   theme_minimal()
-
+```
