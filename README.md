@@ -2,7 +2,7 @@
 
 This repository contains the scripts and raw data collected for the paper "Constitutional Structures for E-Voting throughout Europe".
 
-The manuscript is under review for a special issue at Frontiers in Political Science and thus, the script to run the analysis on Eurobarometers will be provided here, too. 
+The manuscript is under review for a special issue at Frontiers in Political Science and thus, the script to run the analysis on Eurobarometers is provided here, too. 
 
 The study investigates the distribution of e-voting perceptions throughout Europe by analysing the [constitutions](https://github.com/isaborucki/e-voting_constitutions/tree/main/data), <a href="https://github.com/isaborucki/e-voting_constitutions/tree/main/data" target= "_blank"> party manifestos </a>, and <a href="https://search.gesis.org/research_data/ZA6653" target="_blank">Eurobarometer surveys</a>. 
 
@@ -23,13 +23,26 @@ library(readr)
 results <- read_csv("https://raw.githubusercontent.com/isaborucki/e-voting_constitutions/main/data/Manifesto_Coding-Search_Results.csv")
 View(results)
 
-evoteyear <- table(results$Land,results$Jahr)
+evoteyear <- table(results$Land,results$Jahr) # this shall check whether we have absolute counts for the countries coded in our material
 
-plot(results)
+# To plot, we use ggplot, first only a scatterplot to see how the unique entries are distributed over the years
 
 ggplot(results,
        aes(x=Jahr, y=Land))+
   geom_point(position = "jitter", alpha = 0.9) +
+  labs(x = "Year",
+       y = "Country") +
+  theme_minimal()
+  
+# Being more concrete we add boxplots with mean and median to assess the range of said total counts of mentions wihtin the manifestos. 
+
+ggplot(results,
+       aes(x=Jahr, y=Land))+
+  geom_point(position = "jitter", alpha = 0.5) +
+  geom_boxplot() +
+ # geom_violin()+
+  stat_summary(fun.y = mean, colour = "darkblue")+
+  stat_summary(fun.y = median, colour = "black")+
   labs(x = "Year",
        y = "Country") +
   theme_minimal()
