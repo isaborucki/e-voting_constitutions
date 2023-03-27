@@ -1,7 +1,6 @@
 ---
 title: "README"
 output: html_document
-date: "2023-03-20"
 ---
 # Additional material to the manuscript "Constitutional Structures for E-Voting throughout Europe"
 
