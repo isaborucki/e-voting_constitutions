@@ -1,5 +1,6 @@
 ---
-title: Eurobarometer E-Voting
+title: Debating E-Voting throughout Europe: Constitutional Structures, Parties' Concepts, and Europeans' Perceptions
+subtitle: Analysis of the Eurobarometer surveys
 author: Isabelle Borucki
 output: 
   html_document:
@@ -12,7 +13,7 @@ output:
     chunk_output_type: console
 ---
 
-# Analyses of Eurobarometer Waves for the Paper Constitutional Structures and Parties’ Perceptions on E-Voting throughout Europe
+# Analyses of Eurobarometer Waves for the Paper "Debating E-Voting throughout Europe: Constitutional Structures, Parties' Concepts, and Europeans' Perceptions"
 
 This is an R Markdown document describing our data analysis on Eurobarometer surveys for the comparison on whether Europeans favour e-voting.
 
