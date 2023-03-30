@@ -20,36 +20,50 @@ The [`.Rmd`-File](https://github.com/isaborucki/e-voting_constitutions/blob/main
 
 #### Short R-Script to reproduce plot 1
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, message=FALSE}
 
 library(tidyverse)
+library(dplyr)
 library(plotly)
 library(readr)
+library(ggplot2)
+library(hrbrthemes)
 
-results <- read_csv("https://raw.githubusercontent.com/isaborucki/e-voting_constitutions/main/data/Manifesto_Coding-Search_Results.csv")
-View(results)
 
-evoteyear <- table(results$Land,results$Jahr) # this shall check whether we have absolute counts for the countries coded in our material
+data <- read_csv("https://raw.githubusercontent.com/isaborucki/e-voting_constitutions/main/data/Manifesto_Coding-Search_Results.csv")
+View(data)
+
+evoteyear <- table(data$Land,data$Jahr) # this shall check whether we have absolute counts for the countries coded in our material
+
+View(evoteyear)
+
+df <- data %>% 
+        count(Land, Jahr)
+
+# Plot the distribution of keywords mentions over years per country
+Freq <- data %>% 
+      group_by(Land) %>% 
+      summarise(n = n()) %>% 
+      mutate(Freq = n/sum(n)) %>% 
+  mutate(Land = factor(Land, Land))
 
 # To plot, we use ggplot, first only a scatterplot to see how the unique entries are distributed over the years
-
-ggplot(results,
-       aes(x=Jahr, y=Land))+
-  geom_point(position = "jitter", alpha = 0.9) +
-  labs(x = "Year",
-       y = "Country") +
-  theme_minimal()
+  ggplot(data, aes(x=Jahr, y=Land))+
+    geom_point(alpha = 0.5) +
+    theme_minimal()
   
 # Being more concrete we add boxplots with mean and median to assess the range of said total counts of mentions wihtin the manifestos. 
 
-ggplot(results,
-       aes(x=Jahr, y=Land))+
-  geom_point(position = "jitter", alpha = 0.5) +
-  geom_boxplot() +
- # geom_violin()+
-  stat_summary(fun.y = mean, colour = "darkblue")+
-  stat_summary(fun.y = median, colour = "black")+
+ggplot(df,
+       aes(x=Jahr, y=Land, size=n))+
+  geom_point(alpha = 0.5) +
+  #geom_boxplot() +
+  #geom_rug(col="steelblue",alpha=0.1, linewidth=1.5) +
+  #geom_violin()+
+  #stat_summary(fun.y = mean, colour = "darkblue")+
+  #stat_summary(fun.y = median, colour = "black")+
   labs(x = "Year",
        y = "Country") +
-  theme_minimal()
+  theme_minimal() +
+  theme(legend.position="none") 
 ```
