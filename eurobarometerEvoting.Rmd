@@ -71,21 +71,15 @@ For those, we chose several questions throughout the surveys:
   - Q.13: Do you have any concerns about on-line voting?
 
 2016 Flash Eurobarometer 431 (Electoral Rights, wave 3) https://search.gesis.org/research_data/ZA6653
-  - Q6: "EU-Bürger, die in einem anderen EU-Land leben, haben das Recht, bei Europa- oder Kommunalwahlen im entsprechenden Land zu wählen. Wenn Sie in einem anderen EU-Land als in Ihrem Herkunftsland leben würden, inwieweit stimmen Sie zu oder nicht zu, dass Ihnen folgende Dinge die Teilnahme an dortigen Wahlen erleichtern würden?"
-  -—> Antwortmöglichkeit: "Die Möglichkeit, elektronisch oder online zu wählen"
-  - Q8: "Wenn Sie die Möglichkeit hätten, elektronisch, online oder per Briefwahl zu wählen, wie besorgt wären Sie hinsichtlich der folgenden Aspekte?"
+  - Q6: "EU citizens living in another EU country have the right to vote in European or local elections in that country. If you lived in an EU country other than your country of origin, to what extent do you agree or disagree that the following would make it easier for you to vote in elections there?"
+  --> Answer choice: "The ability to vote electronically or online."
+  - Q8: "If you had the ability to vote electronically, online, or by absentee ballot, how concerned would you be about the following?"
 
 2018 - Eurobarometer 90.1: Parlemeter 2018, Democracy and elections and Antimicrobial resistance (2018) 90.1: Democracy and elections https://search.gesis.org/research_data/ZA7484
-  - QB3: "Und wenn Sie in einem EU‐Land leben oder leben würden, das nicht Ihr Herkunftsland ist, welche der folgenden Optionen wäre Ihre bevorzugte Art, bei den nationalen Wahlen Ihres Herkunftslandes Ihre Stimme abzugeben?"
-  -—> Antwortmöglichkeit: "Elektronisch oder online Ihre Stimme abzugeben"
+  - QB3: "And if you live or would live in an EU country that is not your country of origin, which of the following options would be your preferred way to cast your vote in the national elections of your country of origin?"
+  --> Answer choice: "Electronically or online to cast your vote."
 
-  - QB7: "Stellen Sie sich nun vor, Sie könnten elektronisch, online oder postalisch wählen. Wie besorgt bzw. nicht besorgt wären Sie in Bezug auf jeden der folgenden Aspekte?"
-
-
-trust:
-ist mehr oder weniger standard- und regelmäßig erhoben als „Trust in institutions …“ bspw. für: European Union, national government, national parliament, political parties
-Ausprägungen: „tend to trust“, „tend not to trust“ & „don’t know“
-
+  - QB7: "Now imagine you could vote electronically, online, or by mail. How concerned or unconcerned would you be about each of the following?"
 
 ### Data preparation
 
@@ -146,11 +140,6 @@ table(euro2002$isocntry) # contains the isocountries where the survey took place
 # since no variable containing all nations is available, it is needed to transform the single variables into one.
 
 euro2002$country <- NA
-# euro2002$country <- do.call(paste,
-#                             c(euro2002[c("v23","v24","v25","v26","v27","v28",
-#                                          "v29","v30","v31","v32","v33","v34",
-#                                          "v35","v36","v37")],
-#                               sep="-"))
 
 euro2002$country[euro2002$v23 == 1] <- 23
 euro2002$country[euro2002$v24 == 1] <- 24
@@ -187,12 +176,11 @@ euro2002$country <- factor(euro2002$country,
 
 table(euro2002$country) # country of respondents' residency
 table(euro2002$isocntry) # country of respondents' origin
-
 ```
 
 #### Euro 2016
 
-we do the same for the 2016 wave. 
+We do the same for the 2016 wave. 
 
 *sex*
 ```{r sociodemographics2016}
@@ -201,7 +189,6 @@ euro2016$sex <- euro2016$d2
 
 table(euro2016$d2)
 table(euro2016$sex)
-
 ```
 
 *Age*
@@ -234,14 +221,12 @@ table(euro2016$d18_d20) # landline and mobile combined: 1=mobile only 2=landline
 # technical availability
 euro2016$tech <- NA
 euro2016$tech <- euro2016$d18_d20 # we now have a new variable containing the information of the old variable
-
 ```
 
 *Nationality*
 ```{r nationality 2016}
 table(euro2016$isocntry) # contains the isocountries where the survey took place
 table(euro2016$country) # country of respondents' residency
-
 ```
 
 #### Euro 2018
@@ -317,10 +302,10 @@ Calculate meanscore for technical issues: How do people rely on technical assess
 # meanscore on statements towards new technology
 #calculation mean score v53-v56
 
-euro2002$v53 [euro2002$v53<1] <- NA # People should have more access to political representatives via the Internet
-euro2002$v54 [euro2002$v54<1] <- NA # There should be more direct access to the civil service via the Internet
-euro2002$v55 [euro2002$v55<1] <- NA # On-line voting should be used for elections and referenda
-euro2002$v56 [euro2002$v56<1] <- NA # New technologies will create more possibilities for expressing your opinion
+euro2002$v53[euro2002$v53<1] <- NA # People should have more access to political representatives via the Internet
+euro2002$v54[euro2002$v54<1] <- NA # There should be more direct access to the civil service via the Internet
+euro2002$v55[euro2002$v55<1] <- NA # On-line voting should be used for elections and referenda
+euro2002$v56[euro2002$v56<1] <- NA # New technologies will create more possibilities for expressing your opinion
 
 euro2002$newtech <- rowMeans(euro2002[, c("v53","v54","v55","v56")], na.rm = TRUE)
 
@@ -336,11 +321,11 @@ calculate dummy for e-voting from item "On-line voting should be used for electi
 
 # RECODE into dummy
 
-euro2002$evotedmy [as.numeric(euro2002$v55) ==1] <- 1
-euro2002$evotedmy [as.numeric(euro2002$v55) ==2] <- 1
-euro2002$evotedmy [as.numeric(euro2002$v55) ==3] <- NA # set here since this would distort the data strongly towards e-voting which is not intended by putting a neutral point to either the one or the other side of the scale.
-euro2002$evotedmy [as.numeric(euro2002$v55) ==4] <- 0
-euro2002$evotedmy [as.numeric(euro2002$v55) ==5] <- 0
+euro2002$evotedmy[as.numeric(euro2002$v55) ==1] <- 1
+euro2002$evotedmy[as.numeric(euro2002$v55) ==2] <- 1
+euro2002$evotedmy[as.numeric(euro2002$v55) ==3] <- NA # set here since this would distort the data strongly towards e-voting which is not intended by putting a neutral point to either the one or the other side of the scale.
+euro2002$evotedmy[as.numeric(euro2002$v55) ==4] <- 0
+euro2002$evotedmy[as.numeric(euro2002$v55) ==5] <- 0
 
 table(euro2002$evotedmy)
 ```
@@ -353,14 +338,13 @@ recode other items into factors or dummy variables (depending on the variable sc
 
 # RECODE into dummy: People should have more access to political representatives via the Internet
 
-euro2002$effdmy [as.numeric(euro2002$v53) ==1] <- 1
-euro2002$effdmy [as.numeric(euro2002$v53) ==2] <- 1
-euro2002$effdmy [as.numeric(euro2002$v53) ==3] <- NA # set here since this would distort the data strongly towards e-voting which is not intended by putting a neutral point to either the one or the other side of the scale. 
-euro2002$effdmy [as.numeric(euro2002$v53) ==4] <- 0
-euro2002$effdmy [as.numeric(euro2002$v53) ==5] <- 0
+euro2002$effdmy[as.numeric(euro2002$v53) ==1] <- 1
+euro2002$effdmy[as.numeric(euro2002$v53) ==2] <- 1
+euro2002$effdmy[as.numeric(euro2002$v53) ==3] <- NA # set here since this would distort the data strongly towards e-voting which is not intended by putting a neutral point to either the one or the other side of the scale. 
+euro2002$effdmy[as.numeric(euro2002$v53) ==4] <- 0
+euro2002$effdmy[as.numeric(euro2002$v53) ==5] <- 0
 
 table(euro2002$effdmy)
-
 ```
 
 ### 2016 
@@ -380,11 +364,11 @@ folgende Dinge die Teilnahme an dortigen Wahlen erleichtern würden?
 #[1] "Q7 Being able to vote electronically or online"
 table(euro2016$q7_2)
 
-euro2016$evotedmy [as.numeric(euro2016$q7_2) ==1] <- 1
-euro2016$evotedmy [as.numeric(euro2016$q7_2) ==2] <- 1
-euro2016$evotedmy [as.numeric(euro2016$q7_2) ==3] <- 0
-euro2016$evotedmy [as.numeric(euro2016$q7_2) ==4] <- 0
-euro2016$evotedmy [as.numeric(euro2016$q7_2) ==5] <- NA # DK
+euro2016$evotedmy[as.numeric(euro2016$q7_2) ==1] <- 1
+euro2016$evotedmy[as.numeric(euro2016$q7_2) ==2] <- 1
+euro2016$evotedmy[as.numeric(euro2016$q7_2) ==3] <- 0
+euro2016$evotedmy[as.numeric(euro2016$q7_2) ==4] <- 0
+euro2016$evotedmy[as.numeric(euro2016$q7_2) ==5] <- NA # DK
 
 table(euro2016$evotedmy)
 
@@ -396,6 +380,8 @@ in 2018 we have the problem, that not e-voting as such was measured but the tend
 
 *Difficulties of use for some people, such as people with disabilities or older people*
 *# ELECTRONIC/ONLINE/MAIL VOTING CONCERNS - POTENTIAL FRAUD/CYBERATTACK"*
+
+# HIER NOCH DUMMIES CHECKEN
 
 ```{r evote18 dummy}
 
@@ -473,12 +459,12 @@ Also, for 2016 we recode living outside the homeland, but in another EU country 
 # RECODE into dummy
 # IF LIVING IN OTHER EU COUNTRY - PREF WAY VOTING NAT ELEC
 attributes(euro2016$q6_4)
-euro2016$exptdmy [as.numeric(euro2016$q6_4) ==1] <- 1
-euro2016$exptdmy [as.numeric(euro2016$q6_4) ==2] <- 1
-euro2016$exptdmy [as.numeric(euro2016$q6_4) ==3] <- 0
-euro2016$exptdmy [as.numeric(euro2016$q6_4) ==4] <- 0
-euro2016$exptdmy [as.numeric(euro2016$q6_4) ==5] <- NA #DK
-euro2016$exptdmy [as.numeric(euro2016$q6_4) ==6] <- NA #NA
+euro2016$exptdmy[as.numeric(euro2016$q6_4) ==1] <- 1
+euro2016$exptdmy[as.numeric(euro2016$q6_4) ==2] <- 1
+euro2016$exptdmy[as.numeric(euro2016$q6_4) ==3] <- 0
+euro2016$exptdmy[as.numeric(euro2016$q6_4) ==4] <- 0
+euro2016$exptdmy[as.numeric(euro2016$q6_4) ==5] <- NA #DK
+euro2016$exptdmy[as.numeric(euro2016$q6_4) ==6] <- NA #NA
 
 table(euro2016$exptdmy)
 ```
@@ -508,12 +494,12 @@ Here, we take the second statement to compose the dummy variable.
 # RECODE into dummy
 # IF LIVING IN OTHER EU COUNTRY - PREF WAY VOTING NAT ELEC: E-voting/online voting.
 table(euro2018$qb3)
-euro2018$exptdmy [as.numeric(euro2018$qb3) ==1] <- 0
-euro2018$exptdmy [as.numeric(euro2018$qb3) ==2] <- 1
-euro2018$exptdmy [as.numeric(euro2018$qb3) ==3] <- 0
-euro2018$exptdmy [as.numeric(euro2018$qb3) ==4] <- 0
-euro2018$exptdmy [as.numeric(euro2018$qb3) ==5] <- NA
-euro2018$exptdmy [as.numeric(euro2018$qb3) ==6] <- NA
+euro2018$exptdmy[as.numeric(euro2018$qb3) ==1] <- 0
+euro2018$exptdmy[as.numeric(euro2018$qb3) ==2] <- 1
+euro2018$exptdmy[as.numeric(euro2018$qb3) ==3] <- 0
+euro2018$exptdmy[as.numeric(euro2018$qb3) ==4] <- 0
+euro2018$exptdmy[as.numeric(euro2018$qb3) ==5] <- NA
+euro2018$exptdmy[as.numeric(euro2018$qb3) ==6] <- NA
 
 table(euro2018$exptdmy)
 # attributes(euro2018$qb3)
@@ -641,6 +627,7 @@ Tab18_2
 ```
 
 # Build subset sample from datasets
+# SUBSET REALLY NEEDED?
 
 ```{r subset 2002}
 
@@ -705,19 +692,19 @@ glm2_02 <- glm(exptdmy ~ tech + evotedmy + isocntry + sex + age + educ,
             weights = wght_all)
 summary(glm2_02)
 
-# and now with subsets 
-glm1_02 <- glm(DV ~ tech + exptdmy + isocntry + sex + age + educ,  
-            data = euro2002sub,
-            family = binomial(link = "logit"),
-            weights = wght_all)
-            
-summary(glm1_02)
-
-glm2_02 <- glm(exptdmy ~ tech + evotedmy + isocntry + sex + age + educ,  
-            data = euro2002sub,
-            family = binomial(link = "logit"),
-            weights = wght_all)
-summary(glm2_02)
+# # and now with subsets 
+# glm1_02 <- glm(DV ~ tech + exptdmy + isocntry + sex + age + educ,  
+#             data = euro2002sub,
+#             family = binomial(link = "logit"),
+#             weights = wght_all)
+#             
+# summary(glm1_02)
+# 
+# glm2_02 <- glm(exptdmy ~ tech + evotedmy + isocntry + sex + age + educ,  
+#             data = euro2002sub,
+#             family = binomial(link = "logit"),
+#             weights = wght_all)
+# summary(glm2_02)
 ```
 
 
@@ -782,18 +769,6 @@ glm3_18 <- glm(exptdmy ~ tech + evotedmy + netuse + isocntry + sex + age + educ,
 summary(glm3_18)
 ```
 
-
-```{r glmer model 2018}
-#glmer2_18 <- glmer(DV2 ~ (1 | isocntry) +
- #                    tech + exptdmy + netuse + 
-  #                   sex + age + educ,
-   #                  data = euro2018,
-    #                 family = binomial(link = "logit"),
-     #                control = glmerControl(optimizer = "bobyqa"),
-      #               nAGQ = 10)
-#summary(glmer2_18)
-```
-
 # Testing and Plotting Models
 Here, we have a more deeper look into how our models are fitted to the baseline argument 1) that people more inclined towards efficacy measures and trust more in politics would opt more for e-voting than others and 2) that ex-pats would strongerly opt for e-voting than residents. 
 
@@ -842,7 +817,7 @@ modelsummary(list(glm1_18,glm2_18),
 
 ## Testing Performance and GOFs
 
-We test this with performance package.
+We test this with performance and blorr package.
 
 ```{r, performance test, warning=F}
 library("performance")
@@ -879,9 +854,11 @@ blr_model_fit_stats(glm2_18)
 blr_model_fit_stats(glm3_18) # best model
 ```
 
-The test says us that working with the Logreg model, so the dummy variable on evoting is a better fit, than the model on technical awareness and ability. Thus, we further work with this DV and add techmean variable as IV in 2002, and keep the tech variable as IV also. 
+The test says us that working with the Logreg model, so the dummy variable on evoting, is a better fit, than the model on technical awareness and ability. Thus, we further work with this DV and add techmean variable as IV in 2002, and keep the tech variable as IV also in the two other waves. 
 
 ## Plotting with Sjstat and Sjplot
+
+Befor plotting and calculating with Sjstat and Sjplot, we have to detach performance to prevent masking effects between both. 
 
 ```{r more plots, warning=F}
 detach("package:performance")
@@ -907,13 +884,10 @@ GLM18 <- list("E-voting difficult to use" = glm1_18,
               "E-voting potential fraud" = glm2_18,
               "Expats" = glm3_18) # exptdmy as DV 2018
 
-lm <- list(lm2_02,lm1_16,lm1_18) # exptdmy as DV
-
 tab_model(GLM1, auto.label = T, show.se = T)
 tab_model(GLM2, auto.label = T, show.se = T)
 
 tab_model(GLM02, auto.label = T, show.se = T)
-modelsummary(GLM02)
 tab_model(GLM16, auto.label = T, show.se = T)
 tab_model(GLM18, auto.label = T, show.se = T)
 
@@ -981,6 +955,7 @@ modelplot(GLM18, background = b) +
 ```
 
 # Make predictions with our models and test them towards these
+
 ```{r}
 library(ggeffects)
 
@@ -1034,9 +1009,7 @@ stargazer2(models_evote,
           type = "html", 
           out = "modelsevote.html",
           style="all2",
-          odd.ratio = T)
-
-          type = "html", 
+          odd.ratio = T,
           font.size = "small",
           align = TRUE,
           omit.stat = c("f", "ser"),
