@@ -46,7 +46,8 @@ library(psych)
 
 
 ```{r environment}
-setwd("~/Google Drive/E-Voting Constitutions/Data collection/survey/analysis")
+# set your directory here - exchange OWNPATH with your data drive
+setwd("OWNPATH")
 getwd()
 ```
 
@@ -54,7 +55,9 @@ getwd()
 
 ```{r read data}
 
-euro2002 <- data.frame(read_sav("ZA3388_v1-1-0.sav"))
+euro2002 <- data.frame(read_sav("ZA3388_v1-1-0.sav")
+# direct download from GESIS only works after login with personal credentials
+# https://search.gesis.org/research_data/ZA6653
 
 euro2016 <- data.frame(read_sav("ZA6653_v1-0-0.sav"))
 
@@ -402,21 +405,21 @@ in 2018 we have the problem, that not e-voting as such was measured but the tend
 # RECODE into dummy
 #[1] "ELECTRONIC/ONLINE/MAIL VOTING CONCERNS - DIFFICULT TO USE"
 
-euro2018$evotedmy [as.numeric(euro2018$qb7_1) ==1] <- 0
-euro2018$evotedmy [as.numeric(euro2018$qb7_1) ==2] <- 0
-euro2018$evotedmy [as.numeric(euro2018$qb7_1) ==3] <- 1
-euro2018$evotedmy [as.numeric(euro2018$qb7_1) ==4] <- 1
-euro2018$evotedmy [as.numeric(euro2018$qb7_1) ==5] <- NA
+euro2018$evotedmy[as.numeric(euro2018$qb7_1) ==1] <- 0
+euro2018$evotedmy[as.numeric(euro2018$qb7_1) ==2] <- 0
+euro2018$evotedmy[as.numeric(euro2018$qb7_1) ==3] <- 1
+euro2018$evotedmy[as.numeric(euro2018$qb7_1) ==4] <- 1
+euro2018$evotedmy[as.numeric(euro2018$qb7_1) ==5] <- NA
 
 
 # RECODE into dummy
 # ELECTRONIC/ONLINE/MAIL VOTING CONCERNS - POTENTIAL FRAUD/CYBERATTACK"
 
-euro2018$evotedmy2 [as.numeric(euro2018$qb7_2) ==1] <- 0
-euro2018$evotedmy2 [as.numeric(euro2018$qb7_2) ==2] <- 0
-euro2018$evotedmy2 [as.numeric(euro2018$qb7_2) ==3] <- 1
-euro2018$evotedmy2 [as.numeric(euro2018$qb7_2) ==4] <- 1
-euro2018$evotedmy2 [as.numeric(euro2018$qb7_2) ==5] <- NA
+euro2018$evotedmy2[as.numeric(euro2018$qb7_2) ==1] <- 0
+euro2018$evotedmy2[as.numeric(euro2018$qb7_2) ==2] <- 0
+euro2018$evotedmy2[as.numeric(euro2018$qb7_2) ==3] <- 1
+euro2018$evotedmy2[as.numeric(euro2018$qb7_2) ==4] <- 1
+euro2018$evotedmy2[as.numeric(euro2018$qb7_2) ==5] <- NA
 
 table(euro2018$evotedmy)
 table(euro2018$evotedmy2)
@@ -441,8 +444,8 @@ For 2002 we have no expat voting variable, but we have concerns on new technolog
 #Do you have any concerns about on-line voting?
 # Yes, some people would be excluded from voting
 
-euro2002$exptdmy [as.numeric(euro2002$v60) ==1] <- 1
-euro2002$exptdmy [as.numeric(euro2002$v60) ==0] <- 0
+euro2002$exptdmy[as.numeric(euro2002$v60) ==1] <- 1
+euro2002$exptdmy[as.numeric(euro2002$v60) ==0] <- 0
 
 table(euro2002$exptdmy)
 # attributes(euro2018$qb3)
@@ -627,28 +630,6 @@ Tab18_2
 
 ```
 
-# Build subset sample from datasets
-# SUBSET REALLY NEEDED?
-
-```{r subset 2002}
-
-euro2002sub <- select(euro2002,
-                      DV,
-                      tech,
-                      effdmy,
-                      newtech,
-                      evotedmy,
-                      exptdmy,
-                      isocntry,
-                      sex,
-                      age,
-                      educ, 
-                      wght_all)
-
-```
-
-
-
 # Models
 
 ## 2002
@@ -692,20 +673,6 @@ glm2_02 <- glm(exptdmy ~ tech + evotedmy + isocntry + sex + age + educ,
             family = binomial(link = "logit"),
             weights = wght_all)
 summary(glm2_02)
-
-# # and now with subsets 
-# glm1_02 <- glm(DV ~ tech + exptdmy + isocntry + sex + age + educ,  
-#             data = euro2002sub,
-#             family = binomial(link = "logit"),
-#             weights = wght_all)
-#             
-# summary(glm1_02)
-# 
-# glm2_02 <- glm(exptdmy ~ tech + evotedmy + isocntry + sex + age + educ,  
-#             data = euro2002sub,
-#             family = binomial(link = "logit"),
-#             weights = wght_all)
-# summary(glm2_02)
 ```
 
 
