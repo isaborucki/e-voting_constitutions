@@ -1,10 +1,8 @@
----
+------------------------------------------------------------------------
 
-title: "README"
-output: html_document
-date: "2023-03-20"
+title: "README" output: html_document date: "2023-03-20"
 
----
+------------------------------------------------------------------------
 
 # Additional material to the manuscript "Debating E-Voting throughout Europe: Constitutional Structures, Parties' Concepts, and Europeans' Perceptions"
 
@@ -12,7 +10,7 @@ This repository contains the scripts and raw data collected for the paper "Const
 
 The manuscript is under review for a special issue at Frontiers in Political Science and thus, the script to run the analysis on Eurobarometers is provided here, too.
 
-The study investigates the distribution of e-voting perceptions throughout Europe by analysing the [constitutions](https://github.com/isaborucki/e-voting_constitutions/tree/main/data), <a href="https://github.com/isaborucki/e-voting_constitutions/tree/main/data" target= "_blank"> party manifestos </a>, and <a href="https://search.gesis.org/research_data/ZA6653" target="_blank">Eurobarometer surveys</a>.
+The study investigates the distribution of e-voting perceptions throughout Europe by analysing the [constitutions](https://github.com/isaborucki/e-voting_constitutions/tree/main/data), [party manifestos](https://github.com/isaborucki/e-voting_constitutions/tree/main/data), and [Eurobarometer surveys](https://search.gesis.org/research_data/ZA6653).
 
 ## Abstract
 
@@ -20,9 +18,10 @@ Techno-optimists agree that e-voting lies at the heart of implementing e-governm
 
 We approach the question of "legalistic opportunity structures" by relying on constitutions of European member states and parties´ policies. Using a dictionary approach, our research design analyses the constitutions and manifestos of parties running for the European elections. Therefore, national constitutions and party manifestos are part of this study, which we analyse using several mixed-methods approaches. Our results have the broader implications that we need to study in more detail what the digital transformation and the constitutionalisation of electronic decision-making entail to develop a digital democracy and link it to a public sphere throughout Europe. In the end, we conclude by analysing whether or not the EU pushes its member states to e-voting and will implement e-voting for European elections.
 
-The [.Rmd`-File](https://github.com/isaborucki/e-voting_constitutions/blob/main/eurobarometerEvoting.Rmd) is in a pre-beta stadium, so please, add remarks and recommendations to improve the code (`code review`) here to the discussion. Thank you. The first plot of the distribution of e-voting through party platforms was produced using the following`R-script\`:
+The [.Rmd`-File](https://github.com/isaborucki/e-voting_constitutions/blob/main/eurobarometerEvoting.Rmd) is in a pre-beta stadium, so please, add remarks and recommendations to improve the code (`code review`) here to the discussion. Thank you. The first plot of the distribution of e-voting through party platforms was produced using the following `R-script`:
 
 #### Short R-Script to reproduce plot 1
+
 
 ```{r, echo=FALSE, message=FALSE}
 
@@ -70,4 +69,5 @@ ggplot(df,
        y = "Country") +
   theme_minimal() +
   theme(legend.position="none") 
+  
 ```
