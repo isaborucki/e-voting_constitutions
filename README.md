@@ -51,7 +51,8 @@ Freq <- data %>%
     geom_point(alpha = 0.5) +
     theme_minimal()
   
-# Being more concrete we add boxplots with mean and median to assess the range of said total counts of mentions wihtin the manifestos. 
+# Being more concrete we add bubbleplots to assess the range of said total counts of mentions wihtin the manifestos. 
+# Boxplots and violins with mean and median are outlined for visibility reasons but left to play around with. 
 
 ggplot(df,
        aes(x=Jahr, y=Land, size=n))+
