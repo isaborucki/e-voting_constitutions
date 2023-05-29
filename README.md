@@ -1,9 +1,3 @@
-------------------------------------------------------------------------
-
-title: "README" output: html_document date: "2023-03-20"
-
-------------------------------------------------------------------------
-
 # Additional material to the manuscript "Debating E-Voting throughout Europe: Constitutional Structures, Parties' Concepts, and Europeans' Perceptions"
 
 This repository contains the scripts and raw data collected for the paper "Constitutional Structures for E-Voting throughout Europe".
@@ -20,7 +14,7 @@ We approach the question of "legalistic opportunity structures" by relying on co
 
 The [.Rmd-File](https://github.com/isaborucki/e-voting_constitutions/blob/main/eurobarometerEvoting.Rmd) is in a pre-beta stadium, so please, add remarks and recommendations to improve the code (`code review`) here to the discussion. Thank you. The first plot of the distribution of e-voting through party platforms was produced using the following `R-script`:
 
-#### Short R-Script to reproduce plot 1
+#### Short R-Script to reproduce Figure 1
 
 
 ```{r, echo=FALSE, message=FALSE}
