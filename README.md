@@ -18,7 +18,7 @@ The [.Rmd-File](https://github.com/isaborucki/e-voting_constitutions/blob/main/e
 
 
 ```{r, echo=FALSE, message=FALSE}
-
+# Loading libraries
 library(tidyverse)
 library(dplyr)
 library(plotly)
@@ -26,14 +26,16 @@ library(readr)
 library(ggplot2)
 library(hrbrthemes)
 
-
+# reading data
 data <- read_csv("https://raw.githubusercontent.com/isaborucki/e-voting_constitutions/main/data/Manifesto_Coding-Search_Results.csv")
 View(data)
 
+# investigate data
 evoteyear <- table(data$Land,data$Jahr) # this shall check whether we have absolute counts for the countries coded in our material
 
 View(evoteyear)
 
+# build data frame containing keyword hits in manifestos per countries per year
 df <- data %>% 
         count(Land, Jahr)
 
