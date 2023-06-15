@@ -13,13 +13,21 @@ output:
     chunk_output_type: console
 ---
 
-# Analyses of Eurobarometer Waves for the Paper "Debating E-Voting throughout Europe: Constitutional Structures, Parties' Concepts, and Europeans' Perceptions"
+# Analyses of Eurobarometer Waves for the Paper "Debating E-Voting throughout 
+Europe: Constitutional Structures, Parties' Concepts, and Europeans' Perceptions"
 
-This is an R Markdown document describing our data analysis on Eurobarometer surveys for the comparison on whether Europeans favour e-voting.
+This is an R Markdown document describing our data analysis on Eurobarometer 
+surveys for the comparison on whether Europeans favour e-voting, published at 
+Frontiers for Political Science, 5, 
+https://www.frontiersin.org/articles/10.3389/fpos.2023.982558/full
 
-Our leading research question is: Why is e-voting exciting both for parties and Europe, and why is it needed to compare constitutions and perceptions in parties. Is e-voting even part of the digital agenda if the EU wants to align with its member states? 
+Our leading research question is: Why is e-voting exciting both for parties and 
+Europe, and why is it needed to compare constitutions and perceptions in parties. 
+Is e-voting even part of the digital agenda if the EU wants to align with its 
+member states? 
 
-Before doing so, we need to prepare our settings, environments, load packages, and transform varibles.
+Before doing so, we need to prepare our settings, environments, load packages, 
+and transform variables.
 
 ## Prerequisites
 
@@ -55,43 +63,59 @@ getwd()
 
 ```{r read data}
 
-euro2002 <- data.frame(read_sav("ZA3388_v1-1-0.sav")
+euro2002 <- data.frame(read_sav("data/ZA3388_v1-1-0.sav"))
 # direct download from GESIS only works after login with personal credentials
 # https://search.gesis.org/research_data/ZA6653
 
-euro2016 <- data.frame(read_sav("ZA6653_v1-0-0.sav"))
+euro2016 <- data.frame(read_sav("data/ZA6653_v1-0-0.sav"))
 
-euro2018 <- data.frame(read_sav("ZA7484_v1-0-0.sav"))
+euro2018 <- data.frame(read_sav("data/ZA7484_v1-0-0.sav"))
 
 ```
 
-We import the 2001 Flash and Specials Eurobarometer on Impacts of New Technologies, Employment and Social Affairs, and Disabilities, the 2016 Flash Eurobarometer 431 (Electoral Rights, wave 3), and the Eurobarometer 90.1: Democracy and elections from 2018.
+We import the 2001 Flash and Specials Eurobarometer on Impacts of New Technologies, 
+Employment and Social Affairs, and Disabilities, the 2016 Flash Eurobarometer 431 
+(Electoral Rights, wave 3), and the Eurobarometer 90.1: Democracy and elections from 2018.
 All three entails items measuring e-voting or similar concepts. 
 
 For those, we chose several questions throughout the surveys:
 
-- EB 2002 - 54.2: Impacts of New Technologies, Employment and Social Affairs, and Disabilities (https://www.gesis.org/en/eurobarometer-data-service/survey-series/standard-special-eb/study-overview/eurobarometer-542-za-3388-jan-feb-2001)
+- EB 2002 - 54.2: Impacts of New Technologies, Employment and Social Affairs, 
+and Disabilities (https://www.gesis.org/en/eurobarometer-data-service/survey-series/standard-special-eb/study-overview/eurobarometer-542-za-3388-jan-feb-2001)
   - Q.12: Agree/disagree „On-line voting should be used for elections and referenda“
   - Q.13: Do you have any concerns about on-line voting?
 
 2016 Flash Eurobarometer 431 (Electoral Rights, wave 3) https://search.gesis.org/research_data/ZA6653
-  - Q6: "EU citizens living in another EU country have the right to vote in European or local elections in that country. If you lived in an EU country other than your country of origin, to what extent do you agree or disagree that the following would make it easier for you to vote in elections there?"
+  - Q6: "EU citizens living in another EU country have the right to vote in European 
+  or local elections in that country. If you lived in an EU country other than your 
+  country of origin, to what extent do you agree or disagree that the following would 
+  make it easier for you to vote in elections there?"
   --> Answer choice: "The ability to vote electronically or online."
-  - Q8: "If you had the ability to vote electronically, online, or by absentee ballot, how concerned would you be about the following?"
+  - Q8: "If you had the ability to vote electronically, online, or by absentee 
+  ballot, how concerned would you be about the following?"
 
-2018 - Eurobarometer 90.1: Parlemeter 2018, Democracy and elections and Antimicrobial resistance (2018) 90.1: Democracy and elections https://search.gesis.org/research_data/ZA7484
-  - QB3: "And if you live or would live in an EU country that is not your country of origin, which of the following options would be your preferred way to cast your vote in the national elections of your country of origin?"
+2018 - Eurobarometer 90.1: Parlemeter 2018, Democracy and elections and Antimicrobial 
+resistance (2018) 90.1: Democracy and elections https://search.gesis.org/research_data/ZA7484
+  - QB3: "And if you live or would live in an EU country that is not your country 
+  of origin, which of the following options would be your preferred way to cast 
+  your vote in the national elections of your country of origin?"
   --> Answer choice: "Electronically or online to cast your vote."
 
-  - QB7: "Now imagine you could vote electronically, online, or by mail. How concerned or unconcerned would you be about each of the following?"
+  - QB7: "Now imagine you could vote electronically, online, or by mail. 
+  How concerned or unconcerned would you be about each of the following?"
 
 ### Data preparation
 
 First, we look into the raw data on respective variables, we are interested in.
-Besides our most interesting variables on e-voting, we also want to look into sociodemographics: sex, age, education, and internet usage as possible proxy for a prevalence towards e-voting. Probably, party identification might be of interest too. 
+
+Besides our most interesting variables on e-voting, we also want to look into 
+sociodemographics: sex, age, education, and internet usage as possible proxy for 
+a prevalence towards e-voting. Probably, party identification might be of 
+interest, too. 
 
 #### Euro 2002
-First, we take a look into the variables on sex, then age and education and the availability of a landline, mobile phone, and internet.
+First, we take a look into the variables on sex, then age and education and the 
+availability of a landline, mobile phone, and internet.
 
 *Sex*
 
@@ -377,7 +401,6 @@ euro2016$evotedmy[as.numeric(euro2016$q7_2) ==5] <- NA # DK
 table(euro2016$evotedmy)
 
 ```
-
 ### 2018
 
 in 2018 we have the problem, that not e-voting as such was measured but the tendencies of people to vote for expats (see below). Thus we here have another variable that might be somehow biased in the sense that it was asked: "Imagine now that you were able to vote electronically, online or by post. How concerned or not would you be about each of the following?" With this asking about concerns on e-voting, a neutral measurement is not really possible. We work further here with the exclusion of vulnerable groups as potential DV on evoting processes, since this best fits to the literature that is pro or contra evoting.
@@ -829,7 +852,6 @@ The test says us that working with the Logreg model, so the dummy variable on ev
 Befor plotting and calculating with Sjstat and Sjplot, we have to detach performance to prevent masking effects between both. 
 
 ```{r more plots, warning=F}
-detach("package:performance")
 library(sjstats)
 library(sjPlot)
 tab_model(lm2_02,lm1_16,lm1_18, auto.label = F, show.se = T)
@@ -837,11 +859,6 @@ tab_model(lm2_02,lm1_16,lm1_18, auto.label = F, show.se = T)
 GLM1 <- list(glm1_02,glm1_16,glm1_18) # evotedmy as DV all years
 GLM2 <- list(glm2_02,glm2_16,glm2_18) # exptdmy as DV all years
 lm <- list(lm2_02,lm1_16,lm1_18) # exptdmy as DV
-
-models <- list(
-  "Small model" = lm(bill_length_cm ~ flipper_length_cm, data = dat),
-  "Medium model" = lm(bill_length_cm ~ flipper_length_cm + body_mass_g, data = dat),
-  "Large model" = lm(bill_length_cm ~ flipper_length_cm + body_mass_g + species, data = dat))
 
 GLM02 <- list("E-voting" = glm1_02,
               "Concerns: People get excluded" = glm2_02)
@@ -851,13 +868,6 @@ GLM16 <- list("E-voting" = glm1_16,
 GLM18 <- list("E-voting difficult to use" = glm1_18,
               "E-voting potential fraud" = glm2_18,
               "Expats" = glm3_18) # exptdmy as DV 2018
-
-tab_model(GLM1, auto.label = T, show.se = T)
-tab_model(GLM2, auto.label = T, show.se = T)
-
-tab_model(GLM02, auto.label = T, show.se = T)
-tab_model(GLM16, auto.label = T, show.se = T)
-tab_model(GLM18, auto.label = T, show.se = T)
 
 tab_model(list(glm1_02,glm1_16,glm3_18), auto.label = F, show.se = T)
 
@@ -921,32 +931,12 @@ modelplot(GLM18, background = b) +
             title = 'Logistic regression models 2018') +
           facet_grid(~model)
 ```
-
-# Make predictions with our models and test them towards these
-
-```{r}
-library(ggeffects)
-
-glm4Pred <- ggpredict(models$Control)
-plot(glm4Pred)
-
-p1 <- ggpredict(models$Control, terms=c("MF02", "newmembers4"),type = "count", interval = "prediction")
-plot(p1)
-
-p2 <- ggpredict(models$Membership, terms=c("MF02", "newmembers4"),type = "random", interval = "prediction")
-
-plot(p2)
-```
-
-
-
 # read out coefficients
 
 ```{r}
 tab02 <- exp(cbind(OR = coef(glm1_02), confint(glm1_02)))# odds ratios and CI
 tab02
-sd(tab)
-summary(fit41)
+
 ```
 
 # Stargazer Outputs
