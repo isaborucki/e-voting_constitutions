@@ -244,11 +244,13 @@ table(euro2016$d20)
 
 # mobile device
 table(euro2016$d18)
-table(euro2016$d18_d20) # landline and mobile combined: 1=mobile only 2=landline only 3=mobile and landline
+table(euro2016$d18_d20) # landline and mobile combined: 1=mobile only 2=landline 
+#only 3=mobile and landline
 
 # technical availability
 euro2016$tech <- NA
-euro2016$tech <- euro2016$d18_d20 # we now have a new variable containing the information of the old variable
+euro2016$tech <- euro2016$d18_d20 # we now have a new variable containing the 
+#information of the old variable
 ```
 
 *Nationality*
@@ -296,7 +298,8 @@ table(euro2018$d43a)
 table(euro2018$d43b)
 
 # landline and mobile 
-table(euro2018$d43t) # landline and mobile combined: 1=mobile only 2=landline only 3=mobile and landline
+table(euro2018$d43t) # landline and mobile combined: 1=mobile only 2=landline only 
+# 3=mobile and landline
 
 euro2018$tech <- NA
 euro2018$tech <- euro2018$d43t
@@ -330,10 +333,14 @@ Calculate meanscore for technical issues: How do people rely on technical assess
 # meanscore on statements towards new technology
 #calculation mean score v53-v56
 
-euro2002$v53[euro2002$v53<1] <- NA # People should have more access to political representatives via the Internet
-euro2002$v54[euro2002$v54<1] <- NA # There should be more direct access to the civil service via the Internet
-euro2002$v55[euro2002$v55<1] <- NA # On-line voting should be used for elections and referenda
-euro2002$v56[euro2002$v56<1] <- NA # New technologies will create more possibilities for expressing your opinion
+euro2002$v53[euro2002$v53<1] <- NA # People should have more access to political 
+#representatives via the Internet
+euro2002$v54[euro2002$v54<1] <- NA # There should be more direct access to the 
+#civil service via the Internet
+euro2002$v55[euro2002$v55<1] <- NA # On-line voting should be used for elections 
+#and referenda
+euro2002$v56[euro2002$v56<1] <- NA # New technologies will create more possibilities 
+#for expressing your opinion
 
 euro2002$newtech <- rowMeans(euro2002[, c("v53","v54","v55","v56")], na.rm = TRUE)
 
@@ -351,7 +358,9 @@ calculate dummy for e-voting from item "On-line voting should be used for electi
 
 euro2002$evotedmy[as.numeric(euro2002$v55) ==1] <- 1
 euro2002$evotedmy[as.numeric(euro2002$v55) ==2] <- 1
-euro2002$evotedmy[as.numeric(euro2002$v55) ==3] <- NA # set here since this would distort the data strongly towards e-voting which is not intended by putting a neutral point to either the one or the other side of the scale.
+euro2002$evotedmy[as.numeric(euro2002$v55) ==3] <- NA # set here since this would 
+#distort the data strongly towards e-voting which is not intended by putting a neutral 
+#point to either the one or the other side of the scale.
 euro2002$evotedmy[as.numeric(euro2002$v55) ==4] <- 0
 euro2002$evotedmy[as.numeric(euro2002$v55) ==5] <- 0
 
@@ -368,7 +377,9 @@ recode other items into factors or dummy variables (depending on the variable sc
 
 euro2002$effdmy[as.numeric(euro2002$v53) ==1] <- 1
 euro2002$effdmy[as.numeric(euro2002$v53) ==2] <- 1
-euro2002$effdmy[as.numeric(euro2002$v53) ==3] <- NA # set here since this would distort the data strongly towards e-voting which is not intended by putting a neutral point to either the one or the other side of the scale. 
+euro2002$effdmy[as.numeric(euro2002$v53) ==3] <- NA # set here since this would 
+#distort the data strongly towards e-voting which is not intended by putting a 
+#neutral point to either the one or the other side of the scale. 
 euro2002$effdmy[as.numeric(euro2002$v53) ==4] <- 0
 euro2002$effdmy[as.numeric(euro2002$v53) ==5] <- 0
 
@@ -403,7 +414,14 @@ table(euro2016$evotedmy)
 ```
 ### 2018
 
-in 2018 we have the problem, that not e-voting as such was measured but the tendencies of people to vote for expats (see below). Thus we here have another variable that might be somehow biased in the sense that it was asked: "Imagine now that you were able to vote electronically, online or by post. How concerned or not would you be about each of the following?" With this asking about concerns on e-voting, a neutral measurement is not really possible. We work further here with the exclusion of vulnerable groups as potential DV on evoting processes, since this best fits to the literature that is pro or contra evoting.
+in 2018 we have the problem, that not e-voting as such was measured but the tendencies 
+of people to vote for expats (see below). Thus we here have another variable that 
+might be somehow biased in the sense that it was asked: "Imagine now that you were 
+able to vote electronically, online or by post. How concerned or not would you be 
+about each of the following?" With this asking about concerns on e-voting, a neutral 
+measurement is not really possible. We work further here with the exclusion of 
+vulnerable groups as potential DV on evoting processes, since this best fits to 
+the literature that is pro or contra evoting.
 
 *Difficulties of use for some people, such as people with disabilities or older people*
 *# ELECTRONIC/ONLINE/MAIL VOTING CONCERNS - POTENTIAL FRAUD/CYBERATTACK"*
@@ -413,9 +431,9 @@ in 2018 we have the problem, that not e-voting as such was measured but the tend
 ```{r evote18 dummy}
 
 # RECODE into dummy
-# qb3 "And if you live or were to live in an EU country other than your country of origin, which of
-#the following would be your preferred way of voting in the national elections of your
-#country?"
+# qb3 "And if you live or were to live in an EU country other than your country of 
+#origin, which of the following would be your preferred way of voting in the national 
+#elections of your country?"
 
 # euro2018$evotedmy <- NA 
 # euro2018$evotedmy [as.numeric(euro2018$qb3) ==1] <- 0
@@ -452,14 +470,20 @@ attributes(euro2018$qb7_1)
 attributes(euro2018$qb3)
 ```
 
-Now, evote dummy could be used as DV for 2018, if we want to do so, with all problems mentioned above.
+Now, evote dummy could be used as DV for 2018, if we want to do so, with all 
+problems mentioned above.
 
 ## Expats Variables
 
-Being an expat may affect how respondents perceive voting via internet or not. The following variables test for prefering voting online when living abroad - so, the question itself is conditional to living outside of one's statehood country. Maybe, this is an alternative as DV, since we have this variables in all waves.  
+Being an expat may affect how respondents perceive voting via internet or not. 
+The following variables test for prefering voting online when living abroad - so, 
+the question itself is conditional to living outside of one's statehood country. 
+Maybe, this is an alternative as DV, since we have this variables in all waves.  
 
 ### 2002
-For 2002 we have no expat voting variable, but we have concerns on new technology, which of course, measures another construct, but could give an impression of how people felt in these days about new technology.
+For 2002 we have no expat voting variable, but we have concerns on new technology, 
+which of course, measures another construct, but could give an impression of how 
+people felt in these days about new technology.
 
 ```{r expat02 dummy}
 
@@ -477,7 +501,9 @@ table(euro2002$exptdmy)
 
 ### 2016
 
-Also, for 2016 we recode living outside the homeland, but in another EU country into a dummy variable.  Here, the variable was slightly changed to asking about the preferred way to vote when living in the EU but not in the statehood nation.
+Also, for 2016 we recode living outside the homeland, but in another EU country 
+into a dummy variable.  Here, the variable was slightly changed to asking about 
+the preferred way to vote when living in the EU but not in the statehood nation.
 
 *# IF LIVING IN OTHER EU COUNTRY - PREF WAY VOTING NAT ELEC*
 
@@ -498,7 +524,8 @@ table(euro2016$exptdmy)
 
 ### 2018
 
-Also, for 2018 we recode living outside the homeland, but in another EU country, into a dummy variable. 
+Also, for 2018 we recode living outside the homeland, but in another EU country, 
+into a dummy variable. 
 
 *# IF LIVING IN OTHER EU COUNTRY - PREF WAY VOTING NAT ELEC*
 $labels
@@ -534,9 +561,13 @@ table(euro2018$exptdmy)
 
 ## DV
 
-We now think of what our DV could be in several models. First, the statement that online voting should be used for elections from the 2002 wave seems appropriate. We recode our already existing dummy into a new variable, now containing our DV. Unfortunately, this variable is only available in this wave, making comparision impossible.
+We now think of what our DV could be in several models. First, the statement that 
+online voting should be used for elections from the 2002 wave seems appropriate. 
+We recode our already existing dummy into a new variable, now containing our DV. 
+Unfortunately, this variable is only available in this wave, making comparision impossible.
 
-2002: Online voting should be used for elections and referenda, we herefore use our dummy variable. 
+2002: Online voting should be used for elections and referenda, we herefore use 
+our dummy variable. 
 
 ### DV 2002
 ```{r DV02}
@@ -548,7 +579,8 @@ euro2002$DV <- euro2002$evotedmy
 
 ### DV 2016
 The same is appropriate for 2016.
-2016: Online voting should be used for elections and referenda, we herefore use our dummy variable. 
+2016: Online voting should be used for elections and referenda, we herefore use 
+our dummy variable. 
 
 ```{r DV16}
 
@@ -558,8 +590,10 @@ euro2016$DV <- euro2016$evotedmy
 ```
 
 ### DV 2018 
-And for 2018. Here, we have the afore-mentioned problem that not the same variable was used as in the surveys before which does not allow for comparison.
-2018: Online voting should be used for elections and referenda, we herefore use our dummy variable. 
+And for 2018. Here, we have the afore-mentioned problem that not the same variable 
+was used as in the surveys before which does not allow for comparison.
+2018: Online voting should be used for elections and referenda, we therefore use 
+our dummy variable. 
 
 ```{r DV18}
 
@@ -625,7 +659,9 @@ ggplot(euro2018,
 
 ## Testing Correlations
 
-After having recoded our DV and our IV, we are now able to model some causations, or assumed causations on how Europeans might think about evoting and what might affect this. Before modelling, we test for correlations.
+After having recoded our DV and our IV, we are now able to model some causations, 
+or assumed causations on how Europeans might think about evoting and what might 
+affect this. Before modelling, we test for correlations.
 
 *2002*
 ```{r cross table test 2002}
@@ -657,7 +693,8 @@ Tab18_2
 
 ## 2002
 
-First, we run a model with the technical affinity of respondents as DV, this model is a linear one, since this DV is of metric scale. 
+First, we run a model with the technical affinity of respondents as DV, this 
+model is a linear one, since this DV is of metric scale. 
 The second model needs to be a log reg model since this DV is a dummy variable.
 
 ```{r lm models 2002}
@@ -675,7 +712,10 @@ summary(lm2_02)
 ```
 
 ### we now change the Lm-DV with evotedmy and test glms
-Despite the fact that we have more variables on technology in this wave (mean-index on opinions towards new technology and efficacy), we exclude them from the models due to comparability with the surveys from 2016 and 2018. We keep available technology in households (measured as having either landline or mobile phones).
+Despite the fact that we have more variables on technology in this wave (mean-index 
+on opinions towards new technology and efficacy), we exclude them from the models 
+due to comparability with the surveys from 2016 and 2018. We keep available 
+technology in households (measured as having either landline or mobile phones).
 
 ```{r glm models 2002}
 
@@ -744,24 +784,30 @@ glm18_NULL2 <- glm(DV2~1,
                  data = euro2018,
                  family = binomial(link = "logit"))
 
-glm1_18 <- glm(DV1 ~ tech + exptdmy + netuse + isocntry + sex + age + educ, # adding variable on New technologies will create more possibilities for expressing your opinion
+glm1_18 <- glm(DV1 ~ tech + exptdmy + netuse + isocntry + sex + age + educ, # adding variable on 
+               #New technologies will create more possibilities for expressing your opinion
             data = euro2018,
             family = binomial(link = "logit"))
 summary(glm1_18)
 
-glm2_18 <- glm(DV2 ~ tech + exptdmy + netuse + isocntry + sex + age + educ, # adding variable on New technologies will create more possibilities for expressing your opinion
+glm2_18 <- glm(DV2 ~ tech + exptdmy + netuse + isocntry + sex + age + educ, # adding variable on 
+               #New technologies will create more possibilities for expressing your opinion
             data = euro2018,
             family = binomial(link = "logit"))
 summary(glm2_18)
 
-glm3_18 <- glm(exptdmy ~ tech + evotedmy + netuse + isocntry + sex + age + educ, # adding variable on New technologies will create more possibilities for expressing your opinion
+glm3_18 <- glm(exptdmy ~ tech + evotedmy + netuse + isocntry + sex + age + educ, # adding 
+               #variable on New technologies will create more possibilities for expressing your opinion
             data = euro2018,
             family = binomial(link = "logit"))
 summary(glm3_18)
 ```
 
 # Testing and Plotting Models
-Here, we have a more deeper look into how our models are fitted to the baseline argument 1) that people more inclined towards efficacy measures and trust more in politics would opt more for e-voting than others and 2) that ex-pats would strongerly opt for e-voting than residents. 
+Here, we have a more deeper look into how our models are fitted to the baseline 
+argument 1) that people more inclined towards efficacy measures and trust more 
+in politics would opt more for e-voting than others and 2) that ex-pats would 
+strongerly opt for e-voting than residents. 
 
 ```{r, 2002 test models}
 library("modelsummary")
@@ -845,11 +891,14 @@ blr_model_fit_stats(glm2_18)
 blr_model_fit_stats(glm3_18) # best model
 ```
 
-The test says us that working with the Logreg model, so the dummy variable on evoting, is a better fit, than the model on technical awareness and ability. Thus, we further work with this DV and add techmean variable as IV in 2002, and keep the tech variable as IV also in the two other waves. 
+The test says us that working with the Logreg model, so the dummy variable on evoting, 
+is a better fit, than the model on technical awareness and ability. Thus, we further 
+work with this DV and add techmean variable as IV in 2002, and keep the tech variable as IV also in the two other waves. 
 
 ## Plotting with Sjstat and Sjplot
 
-Befor plotting and calculating with Sjstat and Sjplot, we have to detach performance to prevent masking effects between both. 
+Befor plotting and calculating with Sjstat and Sjplot, we have to detach performance 
+to prevent masking effects between both. 
 
 ```{r more plots, warning=F}
 library(sjstats)
