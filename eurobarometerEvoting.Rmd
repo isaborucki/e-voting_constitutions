@@ -28,6 +28,8 @@ member states?
 
 Before doing so, we need to prepare our settings, environments, load packages, 
 and transform variables.
+After that, we conduct several logistic regressions to test for the prevalence and 
+predictors of favouring e-voting or not among European citizens. 
 
 ## Prerequisites
 
@@ -55,8 +57,8 @@ library(psych)
 
 ```{r environment}
 # set your directory here - exchange OWNPATH with your data drive
-setwd("OWNPATH")
-getwd()
+#setwd("OWNPATH")
+#getwd()
 ```
 
 ## Reading in Data
@@ -285,7 +287,6 @@ euro2018$educ <- NA
 euro2018$educ <- euro2018$d8
 ```
 
-
 *Telephone, landline and technical availability*
 ```{r tech 2018}
 # internet use total
@@ -329,7 +330,6 @@ Having listed all those interesting describing variables, we now start over inve
 Calculate meanscore for technical issues: How do people rely on technical assessments and getting in contact with politics? 
 
 ```{r electronic voting 2002}
-
 # meanscore on statements towards new technology
 #calculation mean score v53-v56
 
@@ -345,7 +345,6 @@ euro2002$v56[euro2002$v56<1] <- NA # New technologies will create more possibili
 euro2002$newtech <- rowMeans(euro2002[, c("v53","v54","v55","v56")], na.rm = TRUE)
 
 table(euro2002$newtech)
-
 ```
 
 calculate dummy for e-voting from item "On-line voting should be used for elections and referenda", entailed in the battery v53 to v56
@@ -353,7 +352,6 @@ calculate dummy for e-voting from item "On-line voting should be used for electi
 *Recode into dummy: On-line voting should be used for elections and referenda*
 
 ```{r e-voting02 dummy}
-
 # RECODE into dummy
 
 euro2002$evotedmy[as.numeric(euro2002$v55) ==1] <- 1
@@ -372,7 +370,6 @@ recode other items into factors or dummy variables (depending on the variable sc
 *RECODE into dummy: People should have more access to political representatives via the Internet*
 
 ```{r efficacy}
-
 # RECODE into dummy: People should have more access to political representatives via the Internet
 
 euro2002$effdmy[as.numeric(euro2002$v53) ==1] <- 1
@@ -396,7 +393,6 @@ folgende Dinge die Teilnahme an dortigen Wahlen erleichtern würden?
 4 = Die Möglichkeit, elektronisch oder online zu wählen
 
 ```{r e-voting16 dummy}
-
 # RECODE into dummy
 
 # Facilitating voting procedures through e-voting
@@ -426,23 +422,7 @@ the literature that is pro or contra evoting.
 *Difficulties of use for some people, such as people with disabilities or older people*
 *# ELECTRONIC/ONLINE/MAIL VOTING CONCERNS - POTENTIAL FRAUD/CYBERATTACK"*
 
-# HIER NOCH DUMMIES CHECKEN
-
 ```{r evote18 dummy}
-
-# RECODE into dummy
-# qb3 "And if you live or were to live in an EU country other than your country of 
-#origin, which of the following would be your preferred way of voting in the national 
-#elections of your country?"
-
-# euro2018$evotedmy <- NA 
-# euro2018$evotedmy [as.numeric(euro2018$qb3) ==1] <- 0
-# euro2018$evotedmy [as.numeric(euro2018$qb3) ==2] <- 1
-# euro2018$evotedmy [as.numeric(euro2018$qb3) ==3] <- 0
-# euro2018$evotedmy [as.numeric(euro2018$qb3) ==4] <- 0
-# euro2018$evotedmy [as.numeric(euro2018$qb3) ==5] <- 0
-# euro2018$evotedmy [as.numeric(euro2018$qb3) ==6] <- NA
-
 # RECODE into dummy
 #[1] "ELECTRONIC/ONLINE/MAIL VOTING CONCERNS - DIFFICULT TO USE"
 
@@ -451,7 +431,6 @@ euro2018$evotedmy[as.numeric(euro2018$qb7_1) ==2] <- 0
 euro2018$evotedmy[as.numeric(euro2018$qb7_1) ==3] <- 1
 euro2018$evotedmy[as.numeric(euro2018$qb7_1) ==4] <- 1
 euro2018$evotedmy[as.numeric(euro2018$qb7_1) ==5] <- NA
-
 
 # RECODE into dummy
 # ELECTRONIC/ONLINE/MAIL VOTING CONCERNS - POTENTIAL FRAUD/CYBERATTACK"
@@ -571,10 +550,8 @@ our dummy variable.
 
 ### DV 2002
 ```{r DV02}
-
 euro2002$DV <- NA
 euro2002$DV <- euro2002$evotedmy
-
 ```
 
 ### DV 2016
@@ -583,10 +560,8 @@ The same is appropriate for 2016.
 our dummy variable. 
 
 ```{r DV16}
-
 euro2016$DV <- NA
 euro2016$DV <- euro2016$evotedmy
-
 ```
 
 ### DV 2018 
@@ -596,14 +571,12 @@ was used as in the surveys before which does not allow for comparison.
 our dummy variable. 
 
 ```{r DV18}
-
 euro2018$DV1 <- NA # e-voting difficult to use
 euro2018$DV1 <- euro2018$evotedmy
 
 euro2018$DV2 <- NA # # ELECTRONIC/ONLINE/MAIL VOTING CONCERNS - POTENTIAL FRAUD/CYBERATTACK"
 
 euro2018$DV2 <- euro2018$evotedmy2
-
 ```
 
 # Analysis
@@ -665,18 +638,14 @@ affect this. Before modelling, we test for correlations.
 
 *2002*
 ```{r cross table test 2002}
-
 Tab02 <- CrossTable(euro2002$sex,euro2002$DV, prop.r = T, resid = T, digits = 3, chisq = T)
 Tab02
-
 ```
 
 *2016*
 ```{r cross table test 2016}
-
 Tab16 <- CrossTable(euro2016$sex,euro2016$DV, prop.r = T, resid = T, digits = 3, chisq = T)
 Tab16
-
 ```
 
 *2018*
@@ -686,7 +655,6 @@ Tab18
 
 Tab18_2 <- CrossTable(euro2018$sex, euro2018$DV2, prop.r = T, resid = T, digits = 3, chisq = T)
 Tab18_2
-
 ```
 
 # Models
@@ -718,7 +686,6 @@ due to comparability with the surveys from 2016 and 2018. We keep available
 technology in households (measured as having either landline or mobile phones).
 
 ```{r glm models 2002}
-
 glm02_NULL <- glm(DV~1,
                  data = euro2002,
                  family = binomial(link = "logit"),
@@ -743,7 +710,6 @@ summary(glm2_02)
 
 We do the exact same models for 2016.
 ```{r lm and glm models 2016}
-
 lm1_16 <- lm(exptdmy ~ tech + evotedmy + isocntry + sex + age + educ,
              data = euro2016,
              #family = binomial(link = "logit"),
@@ -891,9 +857,7 @@ blr_model_fit_stats(glm2_18)
 blr_model_fit_stats(glm3_18) # best model
 ```
 
-The test says us that working with the Logreg model, so the dummy variable on evoting, 
-is a better fit, than the model on technical awareness and ability. Thus, we further 
-work with this DV and add techmean variable as IV in 2002, and keep the tech variable as IV also in the two other waves. 
+The test says us that working with the Logreg model, so the dummy variable on evoting, is a better fit, than the model on technical awareness and ability. Thus, we further work with this DV and add techmean variable as IV in 2002, and keep the tech variable as IV also in the two other waves. 
 
 ## Plotting with Sjstat and Sjplot
 
@@ -903,6 +867,7 @@ to prevent masking effects between both.
 ```{r more plots, warning=F}
 library(sjstats)
 library(sjPlot)
+library(strengejacke)
 tab_model(lm2_02,lm1_16,lm1_18, auto.label = F, show.se = T)
 
 GLM1 <- list(glm1_02,glm1_16,glm1_18) # evotedmy as DV all years
@@ -919,7 +884,6 @@ GLM18 <- list("E-voting difficult to use" = glm1_18,
               "Expats" = glm3_18) # exptdmy as DV 2018
 
 tab_model(list(glm1_02,glm1_16,glm3_18), auto.label = F, show.se = T)
-
 
 cols <- c("8" = "red", "4" = "blue", "6" = "darkgreen", "10" = "orange")
 b <- list(geom_vline(xintercept = 0, color = 'orange'),
@@ -953,7 +917,7 @@ modelplot(lm, background = b) +
             x = 'Coefficients',
             y = 'Terms',
             colors = cols,
-            title = 'Logistic regression models ') +
+            title = 'Linear regression models ') +
           facet_grid(~model)
 
 modelplot(GLM02, background = b) +
@@ -979,13 +943,6 @@ modelplot(GLM18, background = b) +
             colors = cols,
             title = 'Logistic regression models 2018') +
           facet_grid(~model)
-```
-# read out coefficients
-
-```{r}
-tab02 <- exp(cbind(OR = coef(glm1_02), confint(glm1_02)))# odds ratios and CI
-tab02
-
 ```
 
 # Stargazer Outputs
