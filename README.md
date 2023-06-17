@@ -3,8 +3,6 @@
 This repository contains the scripts and raw data collected for the paper "Constitutional Structures for E-Voting throughout Europe", published at Frontiers for Political Science, 5, 
 https://www.frontiersin.org/articles/10.3389/fpos.2023.982558/full
 
-The manuscript is under review for a special issue at Frontiers in Political Science and thus, the script to run the analysis on Eurobarometers is provided here, too.
-
 The study investigates the distribution of e-voting perceptions throughout Europe by analysing the [constitutions](https://github.com/isaborucki/e-voting_constitutions/tree/main/data), [party manifestos](https://github.com/isaborucki/e-voting_constitutions/tree/main/data), and [Eurobarometer surveys](https://search.gesis.org/research_data/ZA6653).
 
 ## Abstract
