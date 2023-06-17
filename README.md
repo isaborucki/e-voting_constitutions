@@ -15,7 +15,6 @@ The [.Rmd-File](https://github.com/isaborucki/e-voting_constitutions/blob/main/e
 
 #### Short R-Script to reproduce Figure 1
 
-
 ```{r, echo=FALSE, message=FALSE}
 # Loading libraries
 library(tidyverse)
@@ -30,7 +29,9 @@ data <- read_csv("https://raw.githubusercontent.com/isaborucki/e-voting_constitu
 View(data)
 
 # investigate data
-evoteyear <- table(data$Land,data$Jahr) # this shall check whether we have absolute counts for the countries coded in our material
+evoteyear <- table(data$Land,data$Jahr) 
+# this shall check whether we have 
+# absolute counts for the countries coded in our material
 
 View(evoteyear)
 
@@ -45,13 +46,17 @@ Freq <- data %>%
       mutate(Freq = n/sum(n)) %>% 
   mutate(Land = factor(Land, Land))
 
-# To plot, we use ggplot, first only a scatterplot to see how the unique entries are distributed over the years
+# To plot, we use ggplot, first only a scatterplot to see how the unique entries 
+# are distributed over the years
+
   ggplot(data, aes(x=Jahr, y=Land))+
     geom_point(alpha = 0.5) +
     theme_minimal()
   
-# Being more concrete we add bubbleplots to assess the range of said total counts of mentions wihtin the manifestos. 
-# Boxplots and violins with mean and median are outlined for visibility reasons but left to play around with. 
+# Being more concrete we add bubbleplots to assess the range of said total 
+# counts of mentions wihtin the manifestos. 
+# Boxplots and violins with mean and median are outlined for visibility 
+# reasons but left to play around with. 
 
 ggplot(df,
        aes(x=Jahr, y=Land, size=n))+
